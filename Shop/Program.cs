@@ -11,41 +11,54 @@ namespace Shop
             string input = "";
             Customer customer = new Customer();
 
-            List<Item> Items = new List<Item>();
+            List<Item> items = new List<Item>();
 
-            Items.Add(new Item("Juice", 2));
-            Items.Add(new Item("Book", 8));
-            Items.Add(new Item("Candy", 4));
+            items.Add(new Item("Juice", 2));
+            items.Add(new Item("Book", 8));
+            items.Add(new Item("Candy", 4));
             Console.WriteLine("Hello, are you here to buy or just look around?");
             while (input != "Exit")
             {
                 input = Console.ReadLine();
 
-                if (input.StartsWith("Buy"))
+                if (input != null && input.StartsWith("Buy"))
                 {
+
                     string[] command = input.Split(" ");
                     string commandSeperated = command[1];
-                    List<Item> newItem = Items.Where(item => item.Name == commandSeperated).ToList();
-                    if (newItem.Count != 0)
+                    int amount = 0;
+                    if (command[2] !=null)
                     {
-                        Item listItem = newItem.First();
+                        amount = int.Parse(command[2]);
+                    }
+                    List<Item> newItem = items.Where(item => item.Name == commandSeperated).ToList();
+                    Item listItem = newItem.First();
+                    if (amount == 0 && newItem.Count != 0)
+                    {
+                        listItem.Quantity = amount;
                         customer.Buy(listItem);
                     }
-                    else
+                    else if (amount > 0 && newItem.Count != 0)
                     {
-                        Console.WriteLine("Sorry, we dont have this item! ");
+                        listItem.Quantity = amount;
+                        customer.BuySpecificAmount(listItem);
+
+                    }
+                    else if(newItem.Count == 0)
+                    {
+                        Console.WriteLine("Sorry, we don't have this item! ");
                     }
 
                 }
 
-                if (input.StartsWith("TopUp"))
+                if (input != null && input.StartsWith("TopUp"))
                 {
                     Console.WriteLine("How much do you want to add?");
                     input = Console.ReadLine();
                     customer.TopUp(input);
                 }
 
-                if (input.StartsWith("MoneyLeft"))
+                if (input != null && input.StartsWith("MoneyLeft"))
                 {
                     customer.AmountLeft(input);
                 }
