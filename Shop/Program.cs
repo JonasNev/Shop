@@ -9,20 +9,22 @@ namespace Shop
         static void Main(string[] args)
         {
             string input = "";
+            int amount = 0;
             Customer customer = new Customer();
 
-            List<Item> items = new List<Item>();
+            List<Item> items = new List<Item>
+            {
+                new Item("Juice", 2), 
+                new Item("Book", 8), 
+                new Item("Candy", 4)
+            };
 
-            items.Add(new Item("Juice", 2));
-            items.Add(new Item("Book", 8));
-            items.Add(new Item("Candy", 4));
-            Console.WriteLine("Hello, are you here to buy or just look around?");
+            Console.WriteLine("Hello, are you here to buy or just look around? We currently have Juice, Book or Candy");
             while (input != "Exit")
             {
                 input = Console.ReadLine();
                 string[] command = input.Split(" ");
 
-                int amount = 0;
                 if (command.Length == 2)
                 {
                     if (input.StartsWith("Buy"))
@@ -71,7 +73,7 @@ namespace Shop
                 {
                     customer.AmountLeft(input);
                 }
-                Console.WriteLine("Choose what to do: Buy, TopUp, MoneyLeft");
+                Console.WriteLine("Choose what to do: Buy(Candy, Juice, Book), TopUp, MoneyLeft");
 
             }
         }

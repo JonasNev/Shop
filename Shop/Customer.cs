@@ -17,7 +17,7 @@ namespace Shop
                 wallet = wallet - item.Value;
                 Console.WriteLine("You have bought - " + item.Name);
             }
-            else if (wallet <= item.Value)
+            else if (wallet < item.Value)
             {
                 Console.WriteLine("You don't have enough money, get out of my shop!");
             }
@@ -27,6 +27,7 @@ namespace Shop
         {
             int amount = int.Parse(text);
             wallet = amount + wallet;
+            Console.WriteLine($"New customer balance is {wallet}");
         }
 
         public void AmountLeft(string amount)
